@@ -11,6 +11,13 @@ class Api::ListsController < ApiController
 		end 
 	end
 
+	def destroy
+		user = User.find(params[:user_id])
+		list = user.lists.find(params[:id])
+		list.destroy
+		render json: {}, status: :no_content
+	end
+
 	private
 	def list_params
 		params.require(:list).permit(:name)

@@ -29,7 +29,17 @@ end
 
 puts
 1.upto(5) do |n| 
+	p Item.create(description: "item #{n} on #{joe_list2.user.username}'s #2 list" , list: joe_list2)
+end
+
+puts
+1.upto(5) do |n| 
 	p Item.create(description: "item #{n} on #{mike_list1.user.username}'s #1 list" , list: mike_list1)
+end
+
+puts
+1.upto(5) do |n| 
+	p Item.create(description: "item #{n} on #{mike_list2.user.username}'s #2 list" , list: mike_list2)
 end
 
 puts

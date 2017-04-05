@@ -1,19 +1,19 @@
 class Api::ListsController < ApiController
 	#before_action :authenticated?
 	before_action :set_user, only: [:index, :show, :create, :update, :destroy]
-	before_action :set_list, only: [:update, :destroy]
+	before_action :set_list, only: [:show, :update, :destroy]
 	before_action :authorized_user, only: [:update, :destroy]
 
 	def index
 		#user = User.find(params[:user_id])
-		lists = @user.lists 
-		render json: lists, each_serializer: ListSerializer  
+		@lists = @user.lists 
+		render json: @lists, each_serializer: ListSerializer  
 	end
 
 	def show
 		#user = User.find(params[:user_id])
-		list = @user.lists.find(params[:id]) 
-		render json: list, each_serializer: ListSerializer
+		#list = @user.lists.find(params[:id]) 
+		render json: @list, each_serializer: ListSerializer
 	 end
 
 	def create
@@ -30,10 +30,11 @@ class Api::ListsController < ApiController
 	def update
 		#user = User.find(params[:user_id])
 		#list = user.lists.find(params[:id])
+		#byebug
 		if @list.update(list_params)
 			render json: @list
 		else
-			render json: { error: list.errors.full_messages }, status: :unprocessable_entity
+			render json: { error: @list.errors.full_messages }, status: :unprocessable_entity
 		end
 	end
 
@@ -41,13 +42,14 @@ class Api::ListsController < ApiController
 		#user = User.find(params[:user_id])
 		#list = user.lists.find(params[:id])
 		@list.destroy
-		render json: {}, status: :no_content
+	#	render json: {}, status: :no_content
+		render json: { message: "List destroyed", status: 200 }, status: 200
 	end
 
 	private
 	def list_params
-		#byebug
 		params.require(:list).permit(:name, :permission)
+	#	byebug
 	end
 
 	def set_user

@@ -6,9 +6,9 @@ class Api::ItemsController < ApiController
 
 	def index 
 		#list = List.find(params[:list_id])
-		items = @list.items
-		#render json: items, each_serializer: ItemSerializer
-		render json: JSON.pretty_generate(items.as_json) 
+		@items = @list.items
+		#render json: @items, each_serializer: ItemSerializer
+		render json: JSON.pretty_generate(@items.as_json) 
 	end
 
 	def show
@@ -19,14 +19,12 @@ class Api::ItemsController < ApiController
 
 	def create
 		#list = List.find(params[:list_id])
-		#byebug
-
 		@list.user = @current_user
-		item = @list.items.new(item_params)
-		if item.save
-			render json: item, status: 202
+		@item = @list.items.new(item_params)
+		if @item.save
+			render json: @item, status: 202
 		else
-			render json: { error: item.errors.full_messages }, status: :unprocessable_entity
+			render json: { error: @item.errors.full_messages }, status: :unprocessable_entity
 		end
 	end
 

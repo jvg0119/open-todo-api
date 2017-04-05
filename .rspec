@@ -1,0 +1,5 @@
+--color
+--require spec_helper
+--format documentation
+//--format html
+//--out spec/reports/my_rspec_results.html

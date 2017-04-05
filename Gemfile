@@ -20,6 +20,9 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'pry-rails', '~> 0.3.5'
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
+  gem 'factory_girl_rails', '~> 4.8'
+  gem 'rails-controller-testing'
 end
 
 group :development do

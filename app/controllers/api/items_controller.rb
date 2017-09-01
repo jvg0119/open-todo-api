@@ -2,13 +2,13 @@ class Api::ItemsController < ApiController
 	#before_action :authenticated?
 	before_action :set_list, only: [:index, :show, :create, :update, :destroy]
 	before_action :set_item, only: [:show, :update, :destroy]
-	before_action :authorized_user, only: [:update, :destroy]
+	before_action :authorized_user_for_item, only: [:update, :destroy]
 
-	def index 
+	def index
 		#list = List.find(params[:list_id])
 		@items = @list.items
 		#render json: @items, each_serializer: ItemSerializer
-		render json: JSON.pretty_generate(@items.as_json) 
+		render json: JSON.pretty_generate(@items.as_json)
 	end
 
 	def show
@@ -32,7 +32,7 @@ class Api::ItemsController < ApiController
 		#list = List.find(params[:list_id])
 		#item = list.items.find(params[:id])
 		if @item.update(item_params)
-			render json: @item 
+			render json: @item
 		else
 			render json: { error: @item.errors.full_messages }, status: :unprocessable_entity
 		end
@@ -51,12 +51,10 @@ class Api::ItemsController < ApiController
 		@item = @list.items.find(params[:id])
 	end
 
-	def authorized_user
+	def authorized_user_for_item
 		unless @current_user == @list.user
 			render json: { error: "Not authorized user.", status: 403 }, status: 403
 		end
-	end	
+	end
 
 end
-
-
